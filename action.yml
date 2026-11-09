@@ -1,0 +1,72 @@
+name: "Web Page Change Monitor"
+description: "Detect changes on any web page in CI. Server-side state, no API key, no database. Powered by SaltCrate Oracle (200 free checks/hour) — opens a GitHub issue with the diff when a page changes."
+author: "SaltCrate"
+branding:
+  icon: "eye"
+  color: "blue"
+
+inputs:
+  urls:
+    description: "Newline- or comma-separated list of URLs to watch."
+    required: false
+    default: ""
+  urls-file:
+    description: "Path to a file with one URL per line (comments with # allowed). Ignored when 'urls' is set."
+    required: false
+    default: ""
+  report-changes-only:
+    description: "Only print URLs whose content changed (or that failed). Default false: print every URL."
+    required: false
+    default: "false"
+  fail-on-change:
+    description: "Exit non-zero when any page changed (useful as a CI gate, e.g. vendor pricing pages)."
+    required: false
+    default: "false"
+  create-issue:
+    description: "Open (or update) a GitHub issue titled '[page-change-monitor] N page(s) changed' when changes are detected."
+    required: false
+    default: "false"
+  oracle-url:
+    description: "Oracle base URL."
+    required: false
+    default: "https://oracle.saltcrate.com"
+  oracle-key:
+    description: "Optional SaltCrate Oracle access key (orc_...) for >200 checks/hour. Store it as a repository secret. Without a key the free tier is used."
+    required: false
+    default: ""
+  timeout:
+    description: "Per-request timeout in seconds."
+    required: false
+    default: "30"
+
+outputs:
+  changed:
+    description: "Newline-separated list of URLs that changed this run."
+    value: ${{ steps.run.outputs.changed }}
+  changed-count:
+    description: "How many URLs changed."
+    value: ${{ steps.run.outputs.changed_count }}
+  checked-count:
+    description: "How many URLs were checked."
+    value: ${{ steps.run.outputs.checked_count }}
+  failed:
+    description: "Newline-separated list of URLs that could not be fetched."
+    value: ${{ steps.run.outputs.failed }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check pages for changes
+      id: run
+      shell: bash
+      env:
+        INPUT_URLS: ${{ inputs.urls }}
+        INPUT_URLS_FILE: ${{ inputs.urls-file }}
+        INPUT_REPORT_CHANGES_ONLY: ${{ inputs.report-changes-only }}
+        INPUT_FAIL_ON_CHANGE: ${{ inputs.fail-on-change }}
+        INPUT_CREATE_ISSUE: ${{ inputs.create-issue }}
+        INPUT_ORACLE_URL: ${{ inputs.oracle-url }}
+        INPUT_ORACLE_KEY: ${{ inputs.oracle-key }}
+        INPUT_TIMEOUT: ${{ inputs.timeout }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: python3 "${{ github.action_path }}/monitor.py"
