@@ -32,6 +32,11 @@ Comparison normalises text (lowercase, whitespace-collapsed) so a change in
 ad-view IDs, cache-busters or a rotated nonce does **not** trip the alarm. It
 fires on real copy changes.
 
+## Requirements
+
+`runs-on: ubuntu-latest` (or any Linux runner with Python 3.9+). The action
+uses only the standard library — no `pip install`, no Docker image, ~1s startup.
+
 ## Inputs
 
 | Input | Default | Description |
