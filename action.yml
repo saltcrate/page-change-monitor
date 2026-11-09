@@ -1,5 +1,5 @@
 name: "Web Page Change Monitor"
-description: "Detect changes on any web page in CI. Server-side state, no API key, no database. Powered by SaltCrate Oracle (200 free checks/hour) — opens a GitHub issue with the diff when a page changes."
+description: "Detect web page changes in CI — server-side state, no API key, no repo commits. Powered by SaltCrate Oracle."
 author: "SaltCrate"
 branding:
   icon: "eye"
