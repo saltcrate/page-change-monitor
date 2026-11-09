@@ -154,8 +154,8 @@ def main() -> int:
             fh.write(summary + "\n")
 
     set_output("changed", "\n".join(changed))
-    set_output("changed_count", str(len(changed)))
-    set_output("checked_count", str(len(urls)))
+    set_output("changed-count", str(len(changed)))
+    set_output("checked-count", str(len(urls)))
     set_output("failed", "\n".join(failed))
 
     for url in changed:
