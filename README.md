@@ -59,12 +59,15 @@ uses only the standard library — no `pip install`, no Docker image, ~1s startu
 | `checked-count` | Count of pages checked. |
 | `failed` | URLs that could not be fetched. |
 
+Names containing a dash must be read with index syntax in workflow expressions
+(`outputs['changed-count']`); `outputs.changed-count` is parsed as a subtraction.
+
 ```yaml
 - uses: saltcrate/page-change-monitor@v1
   id: watch
   with:
     urls: https://example.com/pricing
-- if: steps.watch.outputs.changed-count != '0'
+- if: steps.watch.outputs['changed-count'] != '0'
   run: echo "pricing page moved — review it"
 ```
 

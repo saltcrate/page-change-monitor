@@ -45,10 +45,10 @@ outputs:
     value: ${{ steps.run.outputs.changed }}
   changed-count:
     description: "How many URLs changed."
-    value: ${{ steps.run.outputs.changed_count }}
+    value: ${{ steps.run.outputs['changed-count'] }}
   checked-count:
     description: "How many URLs were checked."
-    value: ${{ steps.run.outputs.checked_count }}
+    value: ${{ steps.run.outputs['checked-count'] }}
   failed:
     description: "Newline-separated list of URLs that could not be fetched."
     value: ${{ steps.run.outputs.failed }}

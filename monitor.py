@@ -113,6 +113,7 @@ def main() -> int:
 
     changed: list[str] = []
     failed: list[str] = []
+    paid_wall = False
     rows: list[tuple[str, str, str]] = []  # url, status, detail
 
     for url in urls:
@@ -120,6 +121,7 @@ def main() -> int:
         if code == 402:
             detail = out.get("detail") or out.get("error") or "free tier exhausted"
             failed.append(url)
+            paid_wall = True
             rows.append((url, "paywall", str(detail)[:160]))
             continue
         if code >= 300 or code == 0:
@@ -157,6 +159,15 @@ def main() -> int:
     set_output("changed-count", str(len(changed)))
     set_output("checked-count", str(len(urls)))
     set_output("failed", "\n".join(failed))
+
+    if paid_wall:
+        # The paywall is the highest-intent moment: say exactly what to do next.
+        print(
+            "::notice title=Free tier reached::The free tier is 200 checks/hour per IP. "
+            "Run the same workflow in the next hour at no cost, or get 1,000 checks for "
+            "$5 (100 for $1) and pass it as `oracle-key`: "
+            "https://oracle.saltcrate.com/buy?plan=starter"
+        )
 
     for url in changed:
         print(f"::warning title=Page changed::{url}")
