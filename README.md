@@ -112,18 +112,23 @@ jobs:
 
 ## Rate limits and the paid tier
 
-The free tier allows **200 checks per hour per IP** on the hosted service. Public
-CI runners share IP pools, so if you watch hundreds of URLs on a tight schedule
-you may hit that ceiling and see `paywall` rows in the summary. Two options:
+The free tier allows **100 checks per IP** on the hosted service (no key). Public
+CI runners share IP pools, so a busy workflow can reach that ceiling and start
+seeing `paywall` rows in the summary. Two options:
 
 | Plan | Price | Checks |
 |---|---|---|
-| Free | $0 | 200/hour, no key |
+| Free | $0 | 100 checks, no key |
 | Starter pass | $1 one-off | 100 checks |
 | Full pass | $5 one-off | 1,000 checks |
 
 Passes are one-off (not a subscription), paid by ordinary card — no wallet
 needed: **https://oracle.saltcrate.com/buy**
+
+**Don't want to run CI at all?** If you would rather not keep a workflow around just
+to watch a URL, [SaltCrate Watch](https://oracle.saltcrate.com/watch) does the same
+thing on our servers: 25 URLs checked hourly, a JSON webhook the moment one changes,
+a private dashboard — **$9 for 30 days**, no auto-renew, no key.
 
 Add the key as a secret:
 
