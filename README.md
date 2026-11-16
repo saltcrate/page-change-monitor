@@ -153,8 +153,8 @@ compares the SHA-256 with the stored hash for that URL. Response:
 Nothing is stored in your repository at any point.
 
 The same engine is available as an **MCP server** for AI agents
-(7 tools: `fetch`, `search`, `extract`, `check_link`, `check_change`, `verify`,
-`monitor`) at `https://oracle.saltcrate.com/mcp` — see
+(8 tools: `fetch`, `search`, `extract`, `check_link`, `check_change`, `verify`,
+`monitor`, `check_deps`) at `https://oracle.saltcrate.com/mcp` — see
 [the docs](https://oracle.saltcrate.com/).
 
 ## Development
