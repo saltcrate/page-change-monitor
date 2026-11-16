@@ -31,7 +31,7 @@ inputs:
     required: false
     default: "https://oracle.saltcrate.com"
   oracle-key:
-    description: "Optional SaltCrate Oracle access key (orc_...) for >200 checks/hour. Store it as a repository secret. Without a key the free tier is used."
+    description: "Optional SaltCrate Oracle access key (orc_...) for checks beyond the free tier (100 checks per IP). Store it as a repository secret. Without a key the free tier is used."
     required: false
     default: ""
   timeout:
