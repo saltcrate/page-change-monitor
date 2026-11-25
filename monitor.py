@@ -16,6 +16,7 @@ import urllib.request
 from typing import Any
 
 FREE_HEADER = {"X-Oracle-Free": "1"}
+USER_AGENT = "saltcrate-page-change-monitor/1.0 (+https://github.com/saltcrate/page-change-monitor)"
 
 
 def env(name: str, default: str = "") -> str:
@@ -47,7 +48,13 @@ def post_json(url: str, path: str, body: dict, headers: dict, timeout: int) -> t
     data = json.dumps(body).encode()
     req = urllib.request.Request(
         url.rstrip("/") + path, data=data, method="POST",
-        headers={"Content-Type": "application/json", **headers},
+        headers={
+            "Content-Type": "application/json",
+            # Cloudflare fronts the hosted Oracle and blocks the default
+            # "Python-urllib/x.y" agent with error 1010, so identify ourselves.
+            "User-Agent": USER_AGENT,
+            **headers,
+        },
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:

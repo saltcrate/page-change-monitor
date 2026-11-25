@@ -26,7 +26,7 @@ URL), so:
 - **Zero repo pollution** — no `state.json` commits, no merge conflicts, no extra permissions.
 - **Nothing to bootstrap** — the first run just records the baseline.
 - **Shared state** — two workflows (e.g. a daily cron and a manual run) see the same history.
-- **No signup, no key** — 200 checks/hour free per IP. Attach a key only if you go past that.
+- **No signup, no key** — 100 free checks per IP (last 30 days). Attach a key only if you go past that.
 
 Comparison normalises text (lowercase, whitespace-collapsed) so a change in
 ad-view IDs, cache-busters or a rotated nonce does **not** trip the alarm. It
@@ -47,7 +47,7 @@ uses only the standard library — no `pip install`, no Docker image, ~1s startu
 | `fail-on-change` | `false` | Exit non-zero when anything changed — use as a CI gate. |
 | `create-issue` | `false` | Open/update an issue `[page-change-monitor] N page(s) changed`. |
 | `oracle-url` | `https://oracle.saltcrate.com` | Service base URL. |
-| `oracle-key` | — | Optional `orc_…` key for >200 checks/hour (see below). |
+| `oracle-key` | — | Optional `orc_…` key for checks past the free tier (see below). |
 | `timeout` | `30` | Per-request timeout, seconds. |
 
 ## Outputs
